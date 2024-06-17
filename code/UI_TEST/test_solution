@@ -1,0 +1,90 @@
+import unittest
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+
+class TestReverseIntegerE2E(unittest.TestCase):
+
+    def setUp(self):
+        chromedriver_path = 'C:\\Users\\kira_\\OneDrive\\Escritorio\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe'
+        brave_path = 'C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe'
+
+        options = Options()
+        options.binary_location = brave_path
+
+        self.driver = webdriver.Chrome(service=Service(chromedriver_path), options=options)
+        self.driver.get("http://127.0.0.1:5000/")
+
+    def test_reverse_positive_integer(self):
+        """Test case for reversing a positive integer."""
+        input_field = self.driver.find_element(By.ID, "integer")
+        submit_button = self.driver.find_element(By.XPATH, '//button[@type="submit"]')
+
+        input_field.send_keys("123")
+        submit_button.click()
+
+        result = self.driver.find_element(By.TAG_NAME, 'h2').text
+        self.assertIn("Result: 321", result)
+
+    def test_reverse_negative_integer(self):
+        """Test case for reversing a negative integer."""
+        input_field = self.driver.find_element(By.ID, "integer")
+        submit_button = self.driver.find_element(By.XPATH, '//button[@type="submit"]')
+
+        input_field.send_keys("-123")
+        submit_button.click()
+
+        result = self.driver.find_element(By.TAG_NAME, 'h2').text
+        self.assertIn("Result: -321", result)
+
+    def test_reverse_integer_with_zero(self):
+        """Test case for reversing an integer with trailing zeros."""
+        input_field = self.driver.find_element(By.ID, "integer")
+        submit_button = self.driver.find_element(By.XPATH, '//button[@type="submit"]')
+
+        input_field.send_keys("120")
+        submit_button.click()
+
+        result = self.driver.find_element(By.TAG_NAME, 'h2').text
+        self.assertIn("Result: 21", result)
+
+    def test_reverse_integer_overflow(self):
+        """Test case for reversing an integer that causes overflow."""
+        input_field = self.driver.find_element(By.ID, "integer")
+        submit_button = self.driver.find_element(By.XPATH, '//button[@type="submit"]')
+
+        input_field.send_keys("1534236469")
+        submit_button.click()
+
+        result = self.driver.find_element(By.TAG_NAME, 'h2').text
+        self.assertIn("Result: 0", result)
+
+    def test_reverse_integer_overflow_negative(self):
+        """Test case for reversing an integer that causes overflow (negative)."""
+        input_field = self.driver.find_element(By.ID, "integer")
+        submit_button = self.driver.find_element(By.XPATH, '//button[@type="submit"]')
+
+        input_field.send_keys("-2147483648")
+        submit_button.click()
+
+        result = self.driver.find_element(By.TAG_NAME, 'h2').text
+        self.assertIn("Result: 0", result)
+
+    def test_invalid_input(self):
+        """Test case for invalid input (non-integer)."""
+        input_field = self.driver.find_element(By.ID, "integer")
+        submit_button = self.driver.find_element(By.XPATH, '//button[@type="submit"]')
+
+        input_field.send_keys("abc")
+        submit_button.click()
+
+        error = self.driver.find_element(By.TAG_NAME, 'h2').text
+        self.assertIn("Invalid input. Please enter a valid integer.", error)
+
+    def tearDown(self):
+        self.driver.quit()
+
+
+if __name__ == "__main__":
+    unittest.main()

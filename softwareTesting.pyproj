@@ -23,10 +23,17 @@
   <ItemGroup>
     <Compile Include="code\solution.py" />
     <Compile Include="code\test_solution.py" />
+    <Compile Include="code\UI_TEST\app.py" />
     <Compile Include="softwareTesting.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="code\" />
+    <Folder Include="code\UI_TEST\" />
+    <Folder Include="code\UI_TEST\templates\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="code\UI_TEST\templates\index.html" />
+    <Content Include="code\UI_TEST\test_solution" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reverse Integer</title>
+</head>
+<body>
+    <h1>Reverse Integer</h1>
+    {% if result is defined %}
+    <h2>Result: {{ result }}</h2>
+    {% elif error is defined %}
+    <h2>Error: {{ error }}</h2>
+    {% endif %}
+    <form method="POST" action="/reverse">
+        <label for="integer">Enter an integer:</label>
+        <input type="text" id="integer" name="integer" value="{{ integer }}">
+        <button type="submit">Reverse</button>
+    </form>
+</body>
+</html>
